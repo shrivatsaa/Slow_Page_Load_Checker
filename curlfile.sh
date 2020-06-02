@@ -1,7 +1,5 @@
 #!/bin/bash
 
-bold=$(tput bold)
-normal=$(tput sgr0)
 red=$'\e[1;31m'
 green=$'\e[1;32m'
 blue=$'\e[1;34m'
@@ -48,8 +46,8 @@ data="{}"
 }
 else 
 {
-  echo -e $blue'usage : Run the script as curlfile.sh <method> '<url>' with the ${bold}url enclosed in single quote${normal}\n'$white
-  echo -e $green'Ex. ./curlfile.sh GET 'http://localhost:8080/browse/SCRUM-1'\n'$white
+  echo -e $blue'usage : Run the script as curlfile.sh <method> <url> with the url enclosed in single quotes\n'$white
+  echo -e $green'Ex. ./curlfile.sh GET "'http://localhost:8080/browse/SCRUM-1'"\n'$white
   exit
 }
 fi
@@ -61,8 +59,8 @@ if [[ $method = 'PUT' ]] || [[ $method = 'POST' ]]; then {
   }
 else {
   echo -e $red'POST/PUT method requires data input'$white
-  echo -e $blue'usage : Run the script as sh curlfile.sh <method> '<url>' 'data' with the ${bold}url and also data enclosed in single quote${normal}'$white
-  echo -e $green'Ex. ./curlfile.sh PUT 'rest/api/2/issue/{issuekey}/comment' '{\"body\": \"This is a comment regarding the quality of the response.\"}'\n'$white
+  echo -e $blue'usage : Run the script as curlfile.sh <method> <url> <data> with the url and also data enclosed in single quotes'$white
+  echo -e $green'Ex. ./curlfile.sh PUT "rest/api/2/issue/issuekey/comment" '{\"body\": \"This is a comment regarding the quality of the response.\"}'\n'$white
   exit
   }
   fi
@@ -83,8 +81,8 @@ if [[ $url != "" ]] && [[ $url = http* ]]; then {
   }
   else
     {
-  echo -e $blue'usage : Run the script as curlfile.sh method> '<url>' with the ${bold}url enclosed in single quote${normal}\n'$white    
-  echo -e $green'Ex. ./curlfile.sh GET 'http://localhost:8080/browse/SCRUM-1'\n'$white
+  echo -e $blue'usage : Run the script as curlfile.sh <method> <url> with the url enclosed in single quotes\n'$white    
+  echo -e $green'Ex. ./curlfile.sh GET "http://localhost:8080/browse/SCRUM-1" \n'$white
   exit
 }
 fi 
@@ -93,8 +91,9 @@ fi
 usercred=$(grep "usercred" flag.props | cut -d "=" -f 2);
 
 # Start the thread collection script in the background
-/bin/sh collectthreads.sh &       	 
-
+/bin/sh collectthreads.sh &       	
+# Kill the background thread collection if script abruptly stopped with ctrl+C 
+trap "pkill -f collectthreads.sh &" SIGINT
 
 if [[ $curlme1 != "" ]]; then
 {
