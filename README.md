@@ -81,3 +81,9 @@ Time_Total : 0.130156s
 
 script run completed and thread collection stopped. Exited
 ```
+### Configuration
+
+1. data.txt file can be filled with list of issue keys with each issue key in one line. This will be used for urls with issue key in them. In case you want to curl a single url even with a issue key multiple times, empty the data.txt file.
+2. flag.props needs to be configured with the user/pass to be used for the curl. It can also be used to configure a number of other parameters.
+3. collectthreads.sh runs the actual thread dump collection script
+4. curlfile.sh invokes the collectthreads in background after curling for the url
