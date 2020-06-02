@@ -1,0 +1,21 @@
+Flag=0
+key={}
+
+# Don't edit the above variables
+--------------------------------------
+#Edit the below variables when needed
+--------------------------------------
+#Increase the interval value for thread dump interval
+delay=1
+
+#change the user credentials in the format user:pass
+usercred=shri:jira
+
+# provide a value of either 'jstack' or 'kill' for the below variable based on whether jstack is installed or not
+tdumpmethod=jstack
+
+# Wait time for curl to run after which thread dump generation should start
+delaytostarttdump=2
+
+# Number of times you want the static url to be curled and tdumps generated if its slow.
+decimal=5
